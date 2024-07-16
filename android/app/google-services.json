@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "97367838719",
-    "project_id": "twitter-ztm-3ba12",
-    "storage_bucket": "twitter-ztm-3ba12.appspot.com"
+    "project_number": "762731763702",
+    "project_id": "flutter-ztm-1cc18",
+    "storage_bucket": "flutter-ztm-1cc18.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:97367838719:android:a8c6555f29f5310e8021ca",
+        "mobilesdk_app_id": "1:762731763702:android:934d37b234a132f54859d7",
         "android_client_info": {
-          "package_name": "com.menglay"
+          "package_name": "com.example.flutter_ztm"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCoUio7y8uWJpNNOIJ6xtgXyfHX0IMuQ-k"
+          "current_key": "AIzaSyDzzMyilRU33HKrxfAnwEdhnOlULMx3ZTc"
         }
       ],
       "services": {

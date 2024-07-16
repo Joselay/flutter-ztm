@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,20 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBU_t-JkZ1lodpHzVpd30v8DXSB1bdM1DQ',
-    appId: '1:97367838719:web:ed60ada95f8f1c428021ca',
-    messagingSenderId: '97367838719',
-    projectId: 'twitter-ztm-3ba12',
-    authDomain: 'twitter-ztm-3ba12.firebaseapp.com',
-    storageBucket: 'twitter-ztm-3ba12.appspot.com',
-    measurementId: 'G-CB80SGEN16',
+    apiKey: 'AIzaSyBM_unovK8xW0oJkWQL4kxQqFZx_LCHqbo',
+    appId: '1:762731763702:web:d7b91cf1bfd1d4064859d7',
+    messagingSenderId: '762731763702',
+    projectId: 'flutter-ztm-1cc18',
+    authDomain: 'flutter-ztm-1cc18.firebaseapp.com',
+    storageBucket: 'flutter-ztm-1cc18.appspot.com',
+    measurementId: 'G-G1BQQV2JR5',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCoUio7y8uWJpNNOIJ6xtgXyfHX0IMuQ-k',
-    appId: '1:97367838719:android:a8c6555f29f5310e8021ca',
-    messagingSenderId: '97367838719',
-    projectId: 'twitter-ztm-3ba12',
-    storageBucket: 'twitter-ztm-3ba12.appspot.com',
+    apiKey: 'AIzaSyDzzMyilRU33HKrxfAnwEdhnOlULMx3ZTc',
+    appId: '1:762731763702:android:934d37b234a132f54859d7',
+    messagingSenderId: '762731763702',
+    projectId: 'flutter-ztm-1cc18',
+    storageBucket: 'flutter-ztm-1cc18.appspot.com',
   );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyC_AecirDcogmJg9FWp9OADQER452L80n0',
+    appId: '1:762731763702:ios:89692785eda0a5304859d7',
+    messagingSenderId: '762731763702',
+    projectId: 'flutter-ztm-1cc18',
+    storageBucket: 'flutter-ztm-1cc18.appspot.com',
+    iosBundleId: 'com.example.flutterZtm',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC_AecirDcogmJg9FWp9OADQER452L80n0',
+    appId: '1:762731763702:ios:89692785eda0a5304859d7',
+    messagingSenderId: '762731763702',
+    projectId: 'flutter-ztm-1cc18',
+    storageBucket: 'flutter-ztm-1cc18.appspot.com',
+    iosBundleId: 'com.example.flutterZtm',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBM_unovK8xW0oJkWQL4kxQqFZx_LCHqbo',
+    appId: '1:762731763702:web:8daa397b367e95514859d7',
+    messagingSenderId: '762731763702',
+    projectId: 'flutter-ztm-1cc18',
+    authDomain: 'flutter-ztm-1cc18.firebaseapp.com',
+    storageBucket: 'flutter-ztm-1cc18.appspot.com',
+    measurementId: 'G-LLHRQGK0P8',
+  );
+
 }

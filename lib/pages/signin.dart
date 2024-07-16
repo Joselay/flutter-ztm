@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ztm/pages/signup.dart';
 
@@ -9,6 +10,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _signInKey = GlobalKey<FormState>();
@@ -24,10 +26,6 @@ class _SignInState extends State<SignIn> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Image(
-              image: AssetImage('assets/twitter_blue.png'),
-              width: 100,
-            ),
             const SizedBox(
               height: 20,
             ),
@@ -98,8 +96,9 @@ class _SignInState extends State<SignIn> {
                 onPressed: () async {
                   if (_signInKey.currentState!.validate()) {
                     try {
-                      debugPrint('Email: ${emailController.text}');
-                      debugPrint('Password: ${passwordController.text}');
+                      await _auth.signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text);
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -115,7 +114,10 @@ class _SignInState extends State<SignIn> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const SignUp()));
+                  MaterialPageRoute(
+                    builder: (context) => const SignUp(),
+                  ),
+                );
               },
               child: const Text(
                 'Don\'t have an account? Sign up here',

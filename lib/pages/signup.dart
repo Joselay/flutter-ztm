@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ztm/models/user.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -8,12 +11,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
 
   RegExp emailValid = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +28,6 @@ class _SignUpState extends State<SignUp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Image(
-              image: AssetImage('assets/twitter_blue.png'),
-              width: 100,
-            ),
             const SizedBox(
               height: 20,
             ),
@@ -47,8 +48,10 @@ class _SignUpState extends State<SignUp> {
                 decoration: const InputDecoration(
                   hintText: 'Enter your email',
                   border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 20,
+                  ),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -62,7 +65,9 @@ class _SignUpState extends State<SignUp> {
             ),
             Container(
               margin: const EdgeInsets.all(15),
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(30),
@@ -73,8 +78,10 @@ class _SignUpState extends State<SignUp> {
                 decoration: const InputDecoration(
                   hintText: 'Password',
                   border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 20,
+                  ),
                 ),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
@@ -92,16 +99,27 @@ class _SignUpState extends State<SignUp> {
             Container(
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(30)),
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: TextButton(
                 onPressed: () async {
                   if (_signUpKey.currentState!.validate()) {
                     try {
-                      debugPrint('Email: ${emailController.text}');
-                      debugPrint('Password: ${passwordController.text}');
+                      await _auth.createUserWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+                      await _firestore.collection("users").add(
+                            FirebaseUser(email: emailController.text).toMap(),
+                          );
+                      Navigator.pop(context);
                     } catch (e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.toString())));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                          e.toString(),
+                        ),
+                      ));
                     }
                   }
                 },
