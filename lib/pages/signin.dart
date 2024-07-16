@@ -97,8 +97,9 @@ class _SignInState extends State<SignIn> {
                   if (_signInKey.currentState!.validate()) {
                     try {
                       await _auth.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text);
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));

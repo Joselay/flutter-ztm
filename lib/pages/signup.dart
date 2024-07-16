@@ -1,18 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ztm/models/user.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_ztm/pages/home.dart';
+import 'package:flutter_ztm/providers/user_provider.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _signUpKey = GlobalKey<FormState>();
@@ -110,9 +110,11 @@ class _SignUpState extends State<SignUp> {
                         email: emailController.text,
                         password: passwordController.text,
                       );
-                      await _firestore.collection("users").add(
-                            FirebaseUser(email: emailController.text).toMap(),
-                          );
+
+                      await ref
+                          .read(userProvider.notifier)
+                          .signUp(emailController.text);
+
                       Navigator.pop(context);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -131,7 +133,8 @@ class _SignUpState extends State<SignUp> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Home()));
               },
               child: const Text(
                 'Already have an account? Log in',
