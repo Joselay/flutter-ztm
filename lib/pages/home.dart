@@ -15,6 +15,7 @@ class Home extends ConsumerWidget {
             TextButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut();
+                ref.read(userProvider.notifier).logout();
               },
               child: const Text(
                 "Sign Out",

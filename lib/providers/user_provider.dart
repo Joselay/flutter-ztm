@@ -37,10 +37,33 @@ class UserNotifier extends StateNotifier<LocalUser> {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<void> login(String email) async {
+    QuerySnapshot response = await _firestore
+        .collection("users")
+        .where('email', isEqualTo: email)
+        .get();
+
+    if (response.docs.isEmpty) {
+      return;
+    }
+
+    state = LocalUser(
+      id: response.docs.first.id,
+      user: FirebaseUser(email: email),
+    );
+  }
+
   Future<void> signUp(String email) async {
     DocumentReference response = await _firestore.collection("users").add(
           FirebaseUser(email: email).toMap(),
         );
     state = LocalUser(id: response.id, user: FirebaseUser(email: email));
+  }
+
+  void logout() {
+    state = const LocalUser(
+      id: "error",
+      user: FirebaseUser(email: "error"),
+    );
   }
 }
