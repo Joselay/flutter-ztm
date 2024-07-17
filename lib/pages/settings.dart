@@ -12,11 +12,13 @@ class Settings extends ConsumerStatefulWidget {
 
 class _SettingsState extends ConsumerState<Settings> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     LocalUser currentUser = ref.watch(userProvider);
     _nameController.text = currentUser.user.name;
+    _emailController.text = currentUser.user.email;
 
     return Scaffold(
         appBar: AppBar(
@@ -35,7 +37,7 @@ class _SettingsState extends ConsumerState<Settings> {
                   );
 
                   if (pickedImage != null) {
-                    // TODO: Upload image to Firebase Storage
+                    // TODO: Upload image into firebase
                   }
                 },
                 child: CircleAvatar(
@@ -47,21 +49,44 @@ class _SettingsState extends ConsumerState<Settings> {
               ),
               const SizedBox(height: 10),
               const Center(
-                child: Text("Tap Image to Change"),
+                child: Text(
+                  "Tap Image to Change",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                ),
               ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Enter your email",
+                ),
+                controller: _emailController,
+              ),
+              const SizedBox(height: 16),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: "Enter Your Name",
                 ),
                 controller: _nameController,
               ),
+              const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
                   ref
                       .read(userProvider.notifier)
                       .updateName(_nameController.text);
+                  ref
+                      .read(userProvider.notifier)
+                      .updateEmail(_emailController.text);
                 },
-                child: const Text("Update"),
+                child: const Text(
+                  "Update",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 16,
+                  ),
+                ),
               )
             ],
           ),
