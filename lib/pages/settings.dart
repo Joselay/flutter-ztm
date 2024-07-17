@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_ztm/providers/user_provider.dart';
@@ -22,7 +24,10 @@ class _SettingsState extends ConsumerState<Settings> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Settings"),
+          title: Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: const Text("Settings"),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -37,7 +42,9 @@ class _SettingsState extends ConsumerState<Settings> {
                   );
 
                   if (pickedImage != null) {
-                    // TODO: Upload image into firebase
+                    ref
+                        .read(userProvider.notifier)
+                        .updateImage(File(pickedImage.path));
                   }
                 },
                 child: CircleAvatar(
@@ -53,15 +60,9 @@ class _SettingsState extends ConsumerState<Settings> {
                   "Tap Image to Change",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.black54,
+                    color: Colors.black87,
                   ),
                 ),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Enter your email",
-                ),
-                controller: _emailController,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -76,9 +77,6 @@ class _SettingsState extends ConsumerState<Settings> {
                   ref
                       .read(userProvider.notifier)
                       .updateName(_nameController.text);
-                  ref
-                      .read(userProvider.notifier)
-                      .updateEmail(_emailController.text);
                 },
                 child: const Text(
                   "Update",
